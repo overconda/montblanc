@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mont Blanc Test</title>
+<meta charset="UTF-8">
+</head>
+<body>
+
+<script>
+window.fbAsyncInit = function() {
+    FB.init({
+    appId      : '1940665059558112',
+    cookie     : true,
+    xfbml      : true,
+    version    : 'v3.0'
+    });
+    
+    FB.AppEvents.logPageView();   
+
+    checkLoginState();
+    
+};
+
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script>
+
+    function checkLoginState() {
+        console.log('Check..');
+        FB.getLoginStatus(function(response) {
+            //statusChangeCallback(response);
+            if (response.status === 'connected') {
+                console.log(response);
+                document.getElementById('fbdata').value = 'FBID: ' + response.authResponse.userID;
+            } else if (response.status === 'not_authorized') {
+            console.log('not connected to app');
+            } else {
+            console.log('not logged in to fb');
+            }
+        });
+    }
+
+    function logout(){
+        FB.logout(function(response) {
+        // user is now logged out
+        });
+    }
+
+    
+</script>
+<fb:login-button 
+scope="public_profile,email"
+onlogin="checkLoginState();">
+</fb:login-button>
+<p id="fbdata"></p>
+</body>
+</html>
