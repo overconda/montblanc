@@ -157,9 +157,11 @@ try{
 	//echo json_encode('error'=> 'DB error');
 }
 
+$ucode = generateRandomString(8);
+
 if(!$Found){
 	$now = date("Y-m-d H:i:s");
-	$sql = "insert into montblanc_fbuser (fbid, fbname, avatar, email , cdate) values('$fbId', '$fbName' , '$avatarFile', '$fbEmail' ,'$now') ";
+	$sql = "insert into montblanc_fbuser (fbid, ucode, fbname, avatar, email , cdate) values('$fbId', '$ucode', '$fbName' , '$avatarFile', '$fbEmail' ,'$now') ";
 	//echo $sql;
 	$stmt = $dbh->prepare($sql);
 	$stmt->execute();
@@ -206,4 +208,7 @@ echo "</script>";
 // You can redirect them to a members-only page.
 //header('Location: https://www.gemspavilion.com/gemspavilionwedding/step2.php');
 
+function generateRandomString($length = 10) {
+  return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyz', ceil($length/strlen($x)) )),1,$length);
+}
 ?>

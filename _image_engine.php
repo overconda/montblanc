@@ -17,7 +17,7 @@ function imgMergeForFB(
     $ext = $arr[1];
 
     if($isResize){
-        $sourceResized = 'avatar-temp/tmp-' . $onlyFileName . '-'. date('YmdHisv') . '.' . $ext;
+        $sourceResized = 'avatar-temp/tmp-' . $onlyFileName . '-'. date('YmdHis-u') . '.' . $ext;
         resizeImage($profileJPG, $sourceResized, $photo_w, $photo_h);
     }else{
         $sourceResized = $profileJPG;

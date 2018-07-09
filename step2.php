@@ -3,11 +3,34 @@ if (!session_id()) {
     session_start();
 }
 
-include("dbconnect.php");
 
+
+if(!isset($_SESSION['fbId'])){
+    header("Location: /montblanc/");
+}
 $fbId = $_SESSION['fbId'];
 
+include("dbconnect.php");
+require_once('_image_engine.php');
+
+$arrImageTemplates = array(
+    'img-templates/1.png',
+    'img-templates/2.png',
+    'img-templates/3.png',
+    'img-templates/4.png'
+);
+
+$imageTemplate = $arrImageTemplates[array_rand($arrImageTemplates,1)];
+$ImageProfile = "avatar/" . $fbId . ".jpg";
+
+
+
+$FacebookImage = imgMergeForFB($ImageProfile, $imageTemplate, true , 260, 260, 40, 40);
+    
+$_SESSION['FacebookImage'] = $FacebookImage;
+
 $uid=0;
+$ucode = "";
 $name= "";
 $avatar = "";
 $sql = "select * from montblanc_fbuser where fbid = '$fbId' ";
@@ -17,6 +40,7 @@ try{
 	$result = $stmt->fetchAll( PDO::FETCH_ASSOC );
 
 	foreach ($result as $row) {
+        $ucode = $row['ucode'];
         $uid=$row['uid'];
         $name = $row['fbname'];
         $avatar = $row['avatar'];
@@ -26,6 +50,9 @@ try{
 	$dbh=null;
 }
 
+$sql = "update montblanc_fbuser set fbog='$FacebookImage' where ucode='$ucode' and fbid='$fbId' ";
+$stmt = $dbh->prepare($sql);
+$stmt->execute();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +67,7 @@ try{
 
 
 <!-- CSS -->
+<link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
@@ -55,14 +83,85 @@ try{
 </head>
 
 <body>
+
     <form method="post" action="step3.php">
-    <p>&nbsp;</p><br><br>
+
+<!--    <p>&nbsp;</p><br><br>
     <center>
 <p class="center">
     <img src="<? echo $avatar;?>" class="avatar-cir" />
 </p>
 <h1 class="center">Hello <? echo $name;?></h1>
 
+<div class="row justify-content-center">
+    <div class="col-md-4 ">
+        <h3>ลงทะเบียนแฟนพันธุ์แท้ เจ้าชายน้อย</h3>
+    </div>
+</div>
+-->
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <center>
+            <img src="main-head.png" class="main-logo"/>
+        </center>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <img src='<? echo $FacebookImage;?>' class="fbog" />
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6 ">
+        <h3>ลงทะเบียนแฟนพันธุ์แท้ เจ้าชายน้อย</h3>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-2">
+        ชื่อ/สกุล
+    </div>
+    <div class="col-md-4 ">
+        <input type="text" name="fullname">
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-2">
+        เบอร์โทรศัพท์
+    </div>
+    <div class="col-md-4 ">
+    <input type="tel" id="phone" name="phone"
+           placeholder="08x-xxx-xxxx หรือ 08xxxxxxxx"
+           pattern="[0-9]{3}(|-)[0-9]{3}(|-)[0-9]{4}"
+           required />
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6 text-right">
+        <span class="small-text">กรุณาใส่ข้อมูลจริงเพื่อใช้ยืนยันตัวตนเมื่อได้รับรางวัล</span>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <center>
+            <button type="submit" class="btn btn-primary">ลงทะเบียน</button>
+        </center>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+        <span>แล้วไปพบกับการเปิดตัวพร้อมลุ้นรับ "ปากกา Montblanc คอลเลคชั่นเจ้าชายน้อย"<br>
+        วันที่ 25 ก.ค.61      ชั้น M ลานจัดงาน Hall of Mirrors <br> 
+        ศูนย์การค้าสยามพารากอน 
+        ตั้งแต่เวลา 17.00 – 20.00 น. 
+</span>
+    </div>
+</div>
+
+
+
+<!--
 <div class="center">
     <h4 class="center">กรุณากรอกเบอร์โทรศัพท์เพื่อใช้สำหรับการตรวจสอบหน้างาน</h4>
 </div>
@@ -75,7 +174,9 @@ try{
 <p>
 <input type='submit' value="กดเพื่อลงทะเบียน">
 </p>
+-->
 </form>
+<br><br><br>
 </center>
 </body>
 </html>

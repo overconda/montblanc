@@ -13,14 +13,15 @@ if (!session_id()) {
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Mont Blanc Test</title>
 
-<meta name="title" content="Mont Blanc" />
+<meta name="title" content="Montblanc Le Petit Prince" />
 <meta name="description" content="" />
 <meta name="keyword" content="" />
 
 
 <!-- CSS -->
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
 
 <!--[if lt IE 9]>
     <script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
@@ -40,36 +41,28 @@ if(!isNaN(uid)){
 </script>
 </head>
 
-<body class="bg">
+<body >
 
+	<div class="row justify-content-center">
+    <div class="col-md-4">
+        <center>
+            <img src="main-head.png" class="main-logo"/>
+        </center>
+    </div>
+</div>
 
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+        <h3>ลุ้นเป็นผู้โชคดีที่จะได้เป็นเจ้าของ ปากกา Montblanc Le Petit Prince collection
+			<br> มูลค่า 45,000 บาท
 
-	<section class="mainContent step step-facebook">
-		<div class="container-fluid">
+	</h3>
+    </div>
+</div>
 
-
-			<div class="row ext-box">
-				<div class="col-xs-12 col-sm-6 int-box">
-					<div class="content">
-
-						<!--<a href="step2.php" class="btn btn-lg btn-primary">Play Now</a>-->
-
-					<!--<a href="javascript:void(0)" onclick="FB.login(function(response) {if (response.authResponse) {window.location='prize.html';}}, {scope: 'public_profile,email'});" class="btn-connect-fb"><img src="assets/images/buttons/btn_connect_fb.png"></a>-->
-					<!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="display:none" id="fbbtn"></fb:login-button>-->
-					<!--<fb:login-button scope="public_profile,email" onlogin="window.location.reload(true);" style="display:none" id="fbbtn"></fb:login-button>-->
-
-					<!--
-					<a href="javascript:void(0)" onclick="FB.login(function(response) {if (response.authResponse) {window.location='step2.php';}}, {scope: 'public_profile,email'});" class="btn-connect-fb"><img src="assets/images/buttons/btn_connect_fb.png" ></a>
-					<button class="fb-login-sim">Connect with Facebook<button>
-					<fb:login-button scope="public_profile,email" onlogin="window.location.reload(true);" style="display:none" id="fbbtn"></fb:login-button>
-				-->
-
-				<!--
-				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="display:none;"></fb:login-button>
-				<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false" onlogin="checkLoginState();"></div>
-			-->
-
-				<?php
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+	<?php
 				require_once 'src/Facebook/autoload.php';
 
 				$fb = new Facebook\Facebook([
@@ -87,15 +80,12 @@ if(!isNaN(uid)){
 
                 //echo '<a class="btn btn-block btn-social btn-facebook" href="' . htmlspecialchars($loginUrl) . '"><i class="fb-icon"></i> Continue with Facebook </a>';
                 //echo '<fb:login-button size="xlarge" onlogin="Log.info.bind(\'onlogin callback\')">MMMBBB</fb:login-button>';
-                echo "<button class=\"loginBtn loginBtn--facebook\" onclick=\"window.location.href='$loginUrl'\"> Register Mont Blanc with Facebook </button>";
+                echo "<button class=\"loginBtn loginBtn--facebook\" onclick=\"window.location.href='$loginUrl'\"> ลงทะเบียนด้วย Facebook </button>";
 				 ?>
+    </div>
+</div>
 
-				</div>
-			</div>
-		</div>
-
-	</div>
-</section>
+	
 <!--/section .mainContent-->
 
 <form id="myForm">
@@ -104,15 +94,6 @@ if(!isNaN(uid)){
 <input type=hidden name="fbAvatar" value="">
 </form>
 
-<footer class="nav-footer nav-footer-fixed">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-12">
-				<a href="index.html" class="btn btn-lg btn-primary">Back Home</a>
-			</div>
-		</div>
-	</div>
-</footer>
 <!--/footer-->
 
 

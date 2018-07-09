@@ -2,14 +2,19 @@
 if (!session_id()) {
     session_start();
 }
+if(!isset($_SESSION['fbId'])){
+    header("Location: /montblanc/");
+}
 
 include("dbconnect.php");
 
 $fbId = $_SESSION['fbId'];
 
+$fullname = $_POST['fullname'];
 $phone = $_POST['phone'];
 
-$sql = "update montblanc_fbuser set phone = '$phone' where fbid='$fbId' ";
+$sql = "update montblanc_fbuser set fullname = '$fullname' , phone = '$phone' where fbid='$fbId' ";
+
 $stmt = $dbh->prepare($sql);
 $stmt->execute();
 
@@ -17,6 +22,7 @@ $stmt->execute();
 $uid=0;
 $name= "";
 $avatar = "";
+$ucode = "";
 $sql = "select * from montblanc_fbuser where fbid = '$fbId' ";
 try{
 	$stmt = $dbh->prepare($sql);
@@ -27,11 +33,14 @@ try{
         $uid=$row['uid'];
         $name = $row['fbname'];
         $avatar = $row['avatar'];
+        $ucode = $row['ucode'];
 	}
 
 }catch (PDOException $ev) {
 	$dbh=null;
 }
+
+$FacebookImage = $_SESSION['FacebookImage'];
 
 ?>
 <!DOCTYPE html>
@@ -39,7 +48,7 @@ try{
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Mont Blanc</title>
+<title>Montblanc</title>
 
 <meta name="title" content="Mont Blanc" />
 <meta name="description" content="" />
@@ -47,8 +56,9 @@ try{
 
 
 <!-- CSS -->
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
 
 <!--[if lt IE 9]>
     <script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
@@ -62,17 +72,45 @@ try{
 </head>
 
 <body>
-    <p>&nbsp;</p><br><br>
-    <center>
-<p class="center">
-    <img src="<? echo $avatar;?>" class="avatar-cir" />
-</p>
-<h1 class="center">คุณ <? echo $name;?></h1>
-<h2>ได้ลงทะเบียนเรียบร้อยแล้ว</h2>
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <center>
+            <img src="main-head.png" class="main-logo"/>
+        </center>
+    </div>
+</div>
 
-<?php
-// img width 280;
-?>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <img src='<? echo $FacebookImage;?>' class="fbog" />
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h3 class=" text-center">คุณลงทะเบียนแฟนพันธุ์แท้ <br>เจ้าชายน้อย เรียบร้อยแล้ว</h3>
+        <span>
+        แล้วไปพบกันในงานเปิดตัว ปากกา  Montblanc Le Petit Prince collection 
+พร้อมลุ้นเป็นผู้โชคดีที่จะได้เป็นเจ้าของ ปากกา  Montblanc Le Petit Prince collection มูลค่า 45,000 บาท
+ในวันที่ 25 กรกฎาคม 2561 ชั้น M ลานจัดงาน Hall of Mirrors  ศูนย์การค้าสยามพารากอน ตั้งแต่เวลา 17.00 – 20.00 น. 
+
+</span>
+    </div>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=1940665059558112&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+<div class="fb-share-button " data-href="https://overall.studio/montblanc/view/<?php echo $ucode;?>" data-layout="button" data-size="large" data-mobile-iframe="false" ><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2Foverall.studio%2Fmontblanc%2Fview%2F<?php echo $ucode?>" class="fb-xfbml-parse-ignore">Share ความเป็นเจ้าชายน้อยของคุณ</a></div>
+    </div></div>
+
+<br><br><br>
 
 </center>
 </body>

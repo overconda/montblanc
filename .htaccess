@@ -1,0 +1,8 @@
+RewriteEngine on
+
+#RewriteBase "/montblanc/"
+#RewriteRule ^(style|scripts|images)($|/) - [L]
+RewriteCond %{REQUEST_URI} !\.(css|gif|ico|jpg|js|png|swf|txt)$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)/([^/]+)$ view.php?ucode=$1 [L]
