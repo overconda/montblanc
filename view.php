@@ -61,6 +61,9 @@ $base_url = "https://overall.studio/montblanc/";
 
 <!-- CSS -->
 <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Regular.css" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Italic.css" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Bold.css" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo $base_url;?>style.css">
 

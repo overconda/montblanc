@@ -57,8 +57,15 @@ $FacebookImage = $_SESSION['FacebookImage'];
 
 <!-- CSS -->
 <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Regular.css" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Italic.css" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Bold.css" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <link rel="stylesheet" href="style.css">
+
 
 <!--[if lt IE 9]>
     <script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
@@ -97,6 +104,33 @@ $FacebookImage = $_SESSION['FacebookImage'];
     </div>
 </div>
 
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+        appId            : '1940665059558112',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v3.0'
+        });
+    };
+    
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <center>
+        <a href="#" class="fa fa-facebook" id="shareBtn"><span class='fa--sep'>|</span> Share ความเป็นเจ้าชายน้อยในตัวคุณ</a>
+    </center>
+    
+    </div>
+</div>
+<!--
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -109,9 +143,17 @@ $FacebookImage = $_SESSION['FacebookImage'];
     <div class="col-md-6">
 <div class="fb-share-button " data-href="https://overall.studio/montblanc/view/<?php echo $ucode;?>" data-layout="button" data-size="large" data-mobile-iframe="false" ><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2Foverall.studio%2Fmontblanc%2Fview%2F<?php echo $ucode?>" class="fb-xfbml-parse-ignore">Share ความเป็นเจ้าชายน้อยของคุณ</a></div>
     </div></div>
-
+-->
 <br><br><br>
-
+<script>
+        document.getElementById('shareBtn').onclick = function() {
+          FB.ui({
+            method: 'share',
+            display: 'popup',
+            href: 'http://overall.studio/montblanc/view/<?php echo $ucode;?>',
+          }, function(response){});
+        }
+        </script>  
 </center>
 </body>
 </html>

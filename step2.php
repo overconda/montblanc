@@ -68,8 +68,11 @@ $stmt->execute();
 
 <!-- CSS -->
 <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://overall.studio/montblanc/font/MontblancType-Regular.css" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Italic.css" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Bold.css" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
 
 <!--[if lt IE 9]>
     <script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
@@ -114,22 +117,27 @@ $stmt->execute();
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-md-6 ">
+    <div class="col-md-6 text-center">
         <h3>ลงทะเบียนแฟนพันธุ์แท้ เจ้าชายน้อย</h3>
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-md-2">
+    <div class="col-md-4 text-center">
         ชื่อ/สกุล
     </div>
+</div>
+<div class="row justify-content-center">
     <div class="col-md-4 ">
         <input type="text" name="fullname">
     </div>
 </div>
+<div class="small-space"></div>
 <div class="row justify-content-center">
-    <div class="col-md-2">
+    <div class="col-md-2 text-center">
         เบอร์โทรศัพท์
     </div>
+</div>
+<div class="row justify-content-center">
     <div class="col-md-4 ">
     <input type="tel" id="phone" name="phone"
            placeholder="08x-xxx-xxxx หรือ 08xxxxxxxx"
@@ -138,7 +146,7 @@ $stmt->execute();
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-md-6 text-right">
+    <div class="col-md-6 text-center">
         <span class="small-text">กรุณาใส่ข้อมูลจริงเพื่อใช้ยืนยันตัวตนเมื่อได้รับรางวัล</span>
     </div>
 </div>

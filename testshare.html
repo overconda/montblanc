@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Montblanc</title>
+
+<meta name="title" content="Mont Blanc" />
+<meta name="description" content="" />
+<meta name="keyword" content="" />
+
+
+<!-- CSS -->
+<link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Regular.css" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Italic.css" rel="stylesheet">
+<link href="https://overall.studio/montblanc/font/MontblancType-Bold.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--[if lt IE 9]>
+    <script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="bower_components/Respond/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+<style>
+    .h{
+        min-height: 520px;
+    }
+</style>
+
+</head>
+
+<body>
+        <script>
+                window.fbAsyncInit = function() {
+                  FB.init({
+                    appId            : '1940665059558112',
+                    autoLogAppEvents : true,
+                    xfbml            : true,
+                    version          : 'v3.0'
+                  });
+                };
+              
+                (function(d, s, id){
+                   var js, fjs = d.getElementsByTagName(s)[0];
+                   if (d.getElementById(id)) {return;}
+                   js = d.createElement(s); js.id = id;
+                   js.src = "https://connect.facebook.net/en_US/sdk.js";
+                   fjs.parentNode.insertBefore(js, fjs);
+                 }(document, 'script', 'facebook-jssdk'));
+              </script>
+
+<br><br>
+<div class="h"></div>
+<center>
+<div id="shareBtnXX" class="btn btn-success clearfix" style="font-size:24px; padding:18px"><i class="fab fa-facebook-f"></i> Share it NOW!!</div>
+<br><br>
+<a href="#" class="fa fa-facebook" id="shareBtn"><span class='fa--sep'>|</span> Share ความเป็นเจ้าชายน้อยในตัวคุณ</a>
+</center>
+       
+
+        
+        <script>
+        document.getElementById('shareBtn').onclick = function() {
+          FB.ui({
+            method: 'share',
+            display: 'popup',
+            href: 'http://overall.studio/montblanc/view/aar9pw6u',
+          }, function(response){});
+        }
+        </script>    
+
+</body>
+</html>
