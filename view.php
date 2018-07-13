@@ -49,7 +49,7 @@ $base_url = "https://overall.studio/montblanc/";
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Montblanc</title>
 
-<meta name="title" content="Mont Blanc" />
+<meta name="title" content="Montblanc" />
 <meta name="description" content="" />
 <meta name="keyword" content="" />
 
@@ -95,7 +95,7 @@ $base_url = "https://overall.studio/montblanc/";
 <div class="row justify-content-center">
     <div class="col-md-6">
         <h3 class=" text-center">ร่วมลงทะเบียนลุ้นรับปากกา <br>
-        Monblanc Le Petit Prince collection 
+        Montblanc Le Petit Prince collection 
         <br>มูลค่า 45,000 บาท</h3>
         
     </div>

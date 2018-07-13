@@ -11,9 +11,9 @@ if (!session_id()) {
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Mont Blanc Test</title>
+<title>Montblanc Le Petit Prince collection</title>
 
-<meta name="title" content="Montblanc Le Petit Prince" />
+<meta name="title" content="Montblanc Le Petit Prince collection" />
 <meta name="description" content="" />
 <meta name="keyword" content="" />
 

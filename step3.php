@@ -10,10 +10,12 @@ include("dbconnect.php");
 
 $fbId = $_SESSION['fbId'];
 
-$fullname = $_POST['fullname'];
+//$fullname = $_POST['fullname'];
+$firstname = $_POST['firstname'];
+$lastname = $_POST['lastname'];
 $phone = $_POST['phone'];
 
-$sql = "update montblanc_fbuser set fullname = '$fullname' , phone = '$phone' where fbid='$fbId' ";
+$sql = "update montblanc_fbuser set firstname = '$firstname', lastname='$lastname' , phone = '$phone' where fbid='$fbId' ";
 
 $stmt = $dbh->prepare($sql);
 $stmt->execute();

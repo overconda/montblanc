@@ -11,6 +11,7 @@ if(!isset($_SESSION['fbId'])){
 $fbId = $_SESSION['fbId'];
 
 include("dbconnect.php");
+include("phpqrcode/qrlib.php");
 require_once('_image_engine.php');
 
 $arrImageTemplates = array(
@@ -26,8 +27,10 @@ $ImageProfile = "avatar/" . $fbId . ".jpg";
 
 
 $FacebookImage = imgMergeForFB($ImageProfile, $imageTemplate, true , 260, 260, 40, 40);
-    
-$_SESSION['FacebookImage'] = $FacebookImage;
+
+
+
+
 
 $uid=0;
 $ucode = "";
@@ -50,16 +53,64 @@ try{
 	$dbh=null;
 }
 
-$sql = "update montblanc_fbuser set fbog='$FacebookImage' where ucode='$ucode' and fbid='$fbId' ";
+//// Create QR 
+$qrFile = 'qr-temp/' . $ucode . '.png';
+QRcode::png($ucode, $qrFile, 'L', 4, 2);
+
+//$AlmostFinish = $FacebookImage;
+//$FacebookImage = imgMergeForFB($AlmostFinish , $qrFile, 100,100, 80, 320);
+$FinalImage = "ogimage/" . $ucode . ".png";
+mergeImage($qrFile, $FacebookImage, $FinalImage,118,312);
+
+$sql = "update montblanc_fbuser set fbog='$FinalImage' where ucode='$ucode' and fbid='$fbId' ";
 $stmt = $dbh->prepare($sql);
 $stmt->execute();
+
+$_SESSION['FacebookImage'] = $FinalImage;
+
+function mergeImage($imgForeground, $imgBackground, $imgFinish, $x, $y ){
+    //set the source image (foreground)
+    $sourceImage = $imgForeground;
+
+    //set the destination image (background)
+    $destImage = $imgBackground;
+
+    //get the size of the source image, needed for imagecopy()
+    list($srcWidth, $srcHeight) = getimagesize($sourceImage);
+
+    //create a new image from the source image
+    $src = imagecreatefrompng($sourceImage);
+
+    //create a new image from the destination image
+    $dest = imagecreatefrompng($destImage);
+
+    //set the x and y positions of the source image on top of the destination image
+    $src_xPosition = $x; // pixels from the left
+    $src_yPosition = $y; // pixels from the top
+
+    //set the x and y positions of the source image to be copied to the destination image
+    $src_cropXposition = 0; //do not crop on the side
+    $src_cropYposition = 0; //do not crop at the top
+
+    //merge the source and destination images
+    imagecopy($dest,$src,$src_xPosition,$src_yPosition,$src_cropXposition,$src_cropYposition,$srcWidth,$srcHeight);
+
+    //output the merged images to a file
+    imagepng($dest,$imgFinish);
+
+    //destroy the source image
+    imagedestroy($src);
+
+    //destroy the destination image
+    imagedestroy($dest);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Mont Blanc</title>
+<title>Montblanc</title>
 
 <meta name="title" content="Mont Blanc" />
 <meta name="description" content="" />
@@ -113,7 +164,7 @@ $stmt->execute();
 
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <img src='<? echo $FacebookImage;?>' class="fbog" />
+        <img src='<? echo $FinalImage;?>' class="fbog" />
     </div>
 </div>
 <div class="row justify-content-center">
@@ -123,12 +174,22 @@ $stmt->execute();
 </div>
 <div class="row justify-content-center">
     <div class="col-md-4 text-center">
-        ชื่อ/สกุล
+        ชื่อ
     </div>
 </div>
 <div class="row justify-content-center">
     <div class="col-md-4 ">
-        <input type="text" name="fullname">
+        <input type="text" name="firstname">
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-4 text-center">
+       นามสกุล
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-4 ">
+        <input type="text" name="lastname">
     </div>
 </div>
 <div class="small-space"></div>
