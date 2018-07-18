@@ -18,7 +18,8 @@ $arrImageTemplates = array(
     'img-templates/1.png',
     'img-templates/2.png',
     'img-templates/3.png',
-    'img-templates/4.png'
+    'img-templates/4.png',
+    'img-templates/5.png'
 );
 
 $imageTemplate = $arrImageTemplates[array_rand($arrImageTemplates,1)];
@@ -26,7 +27,7 @@ $ImageProfile = "avatar/" . $fbId . ".jpg";
 
 
 
-$FacebookImage = imgMergeForFB($ImageProfile, $imageTemplate, true , 260, 260, 40, 40);
+$FacebookImage = imgMergeForFB($ImageProfile, $imageTemplate, true , 272, 272, 40, 30);
 
 
 
@@ -60,7 +61,8 @@ QRcode::png($ucode, $qrFile, 'L', 4, 2);
 //$AlmostFinish = $FacebookImage;
 //$FacebookImage = imgMergeForFB($AlmostFinish , $qrFile, 100,100, 80, 320);
 $FinalImage = "ogimage/" . $ucode . ".png";
-mergeImage($qrFile, $FacebookImage, $FinalImage,118,312);
+//mergeImage($qrFile, $FacebookImage, $FinalImage,118,312);
+mergeImage($qrFile, $FacebookImage, $FinalImage,40,312);
 
 $sql = "update montblanc_fbuser set fbog='$FinalImage' where ucode='$ucode' and fbid='$fbId' ";
 $stmt = $dbh->prepare($sql);
@@ -163,7 +165,7 @@ function mergeImage($imgForeground, $imgBackground, $imgFinish, $x, $y ){
 </div>
 
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <img src='<? echo $FinalImage;?>' class="fbog" />
     </div>
 </div>
@@ -174,22 +176,28 @@ function mergeImage($imgForeground, $imgBackground, $imgFinish, $x, $y ){
 </div>
 <div class="row justify-content-center">
     <div class="col-md-4 text-center">
-        ชื่อ
+        ชื่อ 
     </div>
 </div>
 <div class="row justify-content-center">
     <div class="col-md-4 ">
-        <input type="text" name="firstname">
+        <input type="text" name="firstname"
+        pattern="[a-zA-Z]{2,}" 
+            placeholder="ภาษาอังกฤษเท่านั้น"
+            title="กรุณากรอกช่องข้อความเป็นภาษาอังกฤษ" />
     </div>
 </div>
 <div class="row justify-content-center">
     <div class="col-md-4 text-center">
-       นามสกุล
+       นามสกุล 
     </div>
 </div>
 <div class="row justify-content-center">
     <div class="col-md-4 ">
-        <input type="text" name="lastname">
+        <input type="text" name="lastname" 
+            pattern="[a-zA-Z]{2,}" 
+            placeholder="ภาษาอังกฤษเท่านั้น"
+            title="กรุณากรอกช่องข้อความเป็นภาษาอังกฤษ" />
     </div>
 </div>
 <div class="small-space"></div>

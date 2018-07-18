@@ -57,7 +57,7 @@ if(!isNaN(uid)){
 <div class="row justify-content-center">
     <div class="col-md-6 text-center">
         <h3>ลุ้นเป็นผู้โชคดีที่จะได้เป็นเจ้าของ ปากกา Montblanc Le Petit Prince collection
-			<br> มูลค่า 45,000 บาท
+			<br> มูลค่ากว่า 40,000 บาท
 
 	</h3>
     </div>

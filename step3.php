@@ -90,7 +90,7 @@ $FacebookImage = $_SESSION['FacebookImage'];
 </div>
 
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <img src='<? echo $FacebookImage;?>' class="fbog" />
     </div>
 </div>
@@ -99,7 +99,7 @@ $FacebookImage = $_SESSION['FacebookImage'];
         <h3 class=" text-center">คุณลงทะเบียนแฟนพันธุ์แท้ <br>เจ้าชายน้อย เรียบร้อยแล้ว</h3>
         <span>
         แล้วไปพบกันในงานเปิดตัว ปากกา  Montblanc Le Petit Prince collection 
-พร้อมลุ้นเป็นผู้โชคดีที่จะได้เป็นเจ้าของ ปากกา  Montblanc Le Petit Prince collection มูลค่า 45,000 บาท
+พร้อมลุ้นเป็นผู้โชคดีที่จะได้เป็นเจ้าของ ปากกา  Montblanc Le Petit Prince collection มูลค่ากว่า 40,000 บาท
 ในวันที่ 25 กรกฎาคม 2561 ชั้น M ลานจัดงาน Hall of Mirrors  ศูนย์การค้าสยามพารากอน ตั้งแต่เวลา 17.00 – 20.00 น. 
 
 </span>

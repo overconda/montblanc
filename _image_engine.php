@@ -54,7 +54,7 @@ function imgMergeForFB(
     imagecopy($canvas, $frame, 0, 0, 0, 0, $frame_width, $frame_height);
 
     
-    $FileFinish = 'avatar-temp/' . $onlyFileName . '-' . date('YmdHisv') . '.png';
+    $FileFinish = 'avatar-temp/' . $onlyFileName . '-' . date('YmdHis-u') . '.png';
     imagepng($canvas, $FileFinish);
 
     // destroy images to free alocated memory
