@@ -171,7 +171,7 @@ function mergeImage($imgForeground, $imgBackground, $imgFinish, $x, $y ){
 </div>
 <div class="row justify-content-center">
     <div class="col-md-6 text-center">
-        <h3>ลงทะเบียนแฟนพันธุ์แท้ เจ้าชายน้อย</h3>
+        <h3>ลงทะเบียน</h3>
     </div>
 </div>
 <div class="row justify-content-center">

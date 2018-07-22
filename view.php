@@ -56,8 +56,10 @@ $base_url = "https://overall.studio/montblanc/";
 <meta property="og:url"                content="<?php echo $base_url;?>view/<?php echo $ucode?>" />
 <meta property="og:type"               content="article" />
 <meta property="og:title"              content="Montblanc Le Petit Prince Collection" />
-<meta property="og:description"        content="ร่วมลุ้นรับรางวัลปากกา Montblanc Le Petit Prince Collection มูลค่า 45,000 บาท" />
+<meta property="og:description"        content="ร่วมลุ้นรับปากกา Montblanc Le Petit Prince Collection มูลค่ากว่า 40,000 บาท" />
 <meta property="og:image"              content="<?php echo $base_url;?><? echo $fbog;?>" />
+<meta property="og:image:width"        content="800" />
+<meta property="og:image:height"       content="420" />
 
 <!-- CSS -->
 <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
@@ -88,7 +90,7 @@ $base_url = "https://overall.studio/montblanc/";
 </div>
 
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <img src='<?php echo $base_url;?><? echo $fbog;?>' class="fbog" />
     </div>
 </div>
@@ -96,7 +98,7 @@ $base_url = "https://overall.studio/montblanc/";
     <div class="col-md-6">
         <h3 class=" text-center">ร่วมลงทะเบียนลุ้นรับปากกา <br>
         Montblanc Le Petit Prince collection 
-        <br>มูลค่า 45,000 บาท</h3>
+        <br>มูลค่ากว่า 40,000 บาท</h3>
         
     </div>
 </div>
