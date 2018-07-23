@@ -42,7 +42,7 @@ include("../dbconnect.php");
     </div>
 
     <?php
-    $sql = "select *  from montblanc_fbuser order by cdate desc ";
+    $sql = "select *  from montblanc_fbuser where (firstname is not null and lastname is not null) order by cdate desc ";
     
     $data=array();
     $i=0;
@@ -150,6 +150,7 @@ include("../dbconnect.php");
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+    <script src="firework.js"></script>
     <script language="javascript">
         /*Downloaded from https://www.codeseek.co/makzan/lucky-draw-effect-WbeXRq */
         var slides = $('#slideshow').find('li');
@@ -165,40 +166,66 @@ include("../dbconnect.php");
         
         var minimumCount = 50;
         var maximumCount = 200;
+        var breakPointA = maximumCount - 60;
+        var breakPointB = maximumCount - 40;
+        var breakPointC = maximumCount - 20;
+        var breakPointD = maximumCount - 10;
+        var breakPointE = maximumCount - 5;
+        //var 
         var count = 0;
 
         function nextSlide() {
-        $('#again').attr('disabled','disabled');
-        
-        currentIndex += 1;
-        if (currentIndex >= slides.length) {
-            currentIndex = 0;
-        }
-        
-        // move any previous 'out' slide to the right side.
-        $('.out').removeClass().addClass('in');
-        
-        // move current to left.
-        $('.current').removeClass().addClass('out');
-        
-        // move next one to current.
-        $(slides[currentIndex]).removeClass().addClass('current');
-        
-        
-        count += 1;
-        if (count > maximumCount || (count > minimumCount && Math.random()>0.6) ) {
-            clearInterval(interval);
+            $('#again').attr('disabled','disabled');
+
+            var interval = 240;
             
-            $('#again').removeAttr('disabled');
-        }
+            currentIndex += 1;
+            if (currentIndex >= slides.length) {
+                currentIndex = 0;
+            }
+            
+            // move any previous 'out' slide to the right side.
+            $('.out').removeClass().addClass('in');
+            
+            // move current to left.
+            $('.current').removeClass().addClass('out');
+            
+            // move next one to current.
+            $(slides[currentIndex]).removeClass().addClass('current');
+            
+            
+            count += 1;
+            if (count > maximumCount){//} || (count > minimumCount && Math.random()>0.6) ) {
+                //clearInterval(interval);
+            
+                
+                $('#again').removeAttr('disabled');
+                runFirework();
+            }else{
+                interval = 120;
+                if(count > breakPointA){
+                    interval = 260;    
+                }else if(count > breakPointB){
+                    interval = 500;
+                }else if(count > breakPointC){
+                    interval = 800;
+                }else if(count > breakPointD){
+                    interval = 1600;
+                }else if(count > breakPointE){
+                    interval = 2600;
+                }
+
+                setTimeout(nextSlide, interval);
+            }
         }
 
-        var interval = setInterval(nextSlide, 120);
+        //var interval = setInterval(nextSlide, 220);
 
 
         $('#again').click(function(){  
-        count = 0;
-        interval = setInterval(nextSlide, 120);
+            count = 0;
+            //interval = setInterval(nextSlide, 220);
+            nextSlide();
         });
     </script>
   </body>
