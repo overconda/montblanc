@@ -17,6 +17,14 @@ if (!session_id()) {
 <meta name="description" content="" />
 <meta name="keyword" content="" />
 
+<meta property="og:url"                content="https://overall.studio/montblanc" />
+<meta property="og:type"               content="article" />
+<meta property="og:title"              content="Montblanc Le Petit Prince Collection" />
+<meta property="og:description"        content="ร่วมลุ้นรับปากกา Montblanc Le Petit Prince Collection มูลค่ากว่า 40,000 บาท" />
+<meta property="og:image"              content="https://overall.studio/montblanc/montblanc-fb-share.png" />
+<meta property="og:image:width"        content="1200" />
+<meta property="og:image:height"       content="630" />
+
 
 <!-- CSS -->
 <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">

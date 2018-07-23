@@ -1,0 +1,35 @@
+html { 
+    background: url(../bg.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  
+  ul {
+    width: 600px;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+    list-style: none;
+    -webkit-perspective: 700;
+    perspective: 700;
+  }
+  
+  li {
+    position: absolute;  
+    transform-origin: 0 100%;
+  }
+  li.current {
+    transition: all 0.3s ease-out;
+    opacity: 1.0;
+  }
+  li.in {
+    opacity: 0.0;
+    transform: rotate3d(1, 0, 0, -90deg);
+  }
+  li.out {
+    transition: all 0.3s ease-out;
+    opacity: 0.0;
+    transform: rotate3d(1, 0, 0, 90deg);
+  }
