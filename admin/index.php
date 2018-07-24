@@ -36,6 +36,23 @@ try{
 	echo "DB error";
 }
 
+/// check who put all data
+$sql = "select count(*) as cc  from montblanc_fbuser where (firstname is not null and lastname is not null) order by cdate desc ";
+    
+$getalldata = 0;
+
+try{
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll( PDO::FETCH_ASSOC );
+
+    $getalldata = $result[0]['cc'];
+}catch (PDOException $ev) {
+    $dbh=null;
+    echo "DB error";
+}
+
+
 $dbh = null;
 
 $allUsers = sizeof($data);
@@ -180,6 +197,13 @@ $allUsers = sizeof($data);
                         </a>
                     </li>
                     
+                    <li class="">
+                        <a href="lucky.php" target="_blank">
+                            <i class="material-icons">casino</i>
+                            <span>หน้า Lucky Draw</span>
+                        </a>
+                    </li>
+    
                 </ul>
             </div>
             <!-- #Menu -->
@@ -346,12 +370,35 @@ $allUsers = sizeof($data);
                             <i class="material-icons">person</i>
                         </div>
                         <div class="content">
-                            <div class="text">ALL REGISTRATIONS</div>
+                            <div class="text">ALL REGISTs</div>
                             <div class="number count-to" data-from="0" data-to="<?=$allUsers;?>" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-light-green hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">face</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">GET ALL DATA</div>
+                            <div class="number count-to" data-from="0" data-to="<?=$getalldata;?>" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-cyan hover-expand-effect">  
+                        <div class="icon">
+                            <i class="material-icons">event_available</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">CONFIRM</div>
+                            <div class="number count-to" data-from="0" data-to="0" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
             <!-- #END# Widgets -->
 
 
@@ -435,6 +482,7 @@ $allUsers = sizeof($data);
         </div>
     </section>
 
+    
 
     <!-- Jquery Core Js -->
     <script src="plugins/jquery/jquery.min.js"></script>
@@ -480,10 +528,3 @@ $allUsers = sizeof($data);
 </body>
 
 </html>
-
-
-<?php
-for($i=0; $i<sizeof($data); $i++){
-    echo "<br>" . $data[$i]['ucode'] . " -- " . $data[$i]['fbname'];
-}
-?>

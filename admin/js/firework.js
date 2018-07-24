@@ -141,7 +141,7 @@ function createParticles( x, y ) {
 }
 
 function runFirework() {
-	requestAnimFrame( loop );
+	requestAnimFrame( runFirework );
 	hue += 2.3;
 	
 
