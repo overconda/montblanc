@@ -73,8 +73,10 @@ include("../dbconnect.php");
     </div>
     
     <?php
-    $sql = "select *  from montblanc_fbuser where (firstname is not null and lastname is not null) order by cdate desc ";
-    
+    //$sql = "select *  from montblanc_fbuser where (firstname is not null and lastname is not null) order by cdate desc ";
+    $sql = "select * from montblanc_fbuser where confirm=1";
+
+
     $data=array();
     $i=0;
     try{
