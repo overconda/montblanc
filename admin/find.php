@@ -1,105 +1,82 @@
 <?php
 session_start();
-
-if(!isset($_SESSION['montblancadmin'])){
-    if($_SESSION['montblancadmin']!='admin'){
-        header("Location: login.php");
-    }
-}
 include("../dbconnect.php");
 
+$sql = "";
 
-$perPage = 50;
-$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
-$startAt = $perPage * ($page - 1);
-$total = 0;
-$sql = "select count(*) as total  from montblanc_fbuser order by cdate desc ";
-try{
-	$stmt = $dbh->prepare($sql);
-	$stmt->execute();
-    $result = $stmt->fetchAll( PDO::FETCH_ASSOC );
-    $total = $result[0]['total'];
-}catch (PDOException $ev) {
-	$dbh=null;
-	echo "DB error";
+
+$isCmd = isset($_POST['cmd']);
+$isUcode = isset($_POST['ucode']);
+
+echo "POST: ";
+print_r($_POST);
+
+/////// Update CONFIRM flag
+if($isCmd){
+    if($_POST['cmd'] == 'confirm'){
+        $ucode = $_POST['ucode'];
+        $sql = "update montblanc_fbuser set confirm = 1 where ucode = '$ucode' ";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+    }
 }
 
-$totalPages = ceil($total / $perPage);
+$isPhone = isset($_POST['checkphone']);
+$isUcode = isset($_POST['ucode']);
 
-$links = "Page : ";
-for ($i = 1; $i <= $totalPages; $i++) {
-  $links .= ($i != $page ) 
-            ? "<a href='index.php?page=$i'> $i </a> "
-            : " [ $page ] ";
+$lenPhone = 0;
+$lenUcode = 0;
+
+
+
+if($isPhone){$lenPhone = strlen(trim($_POST['checkphone']));}
+if($isUcode){$lenUcode = strlen(trim($_POST['ucode']));}
+
+if($lenPhone > 0){
+    
+    $phone = trim($_POST['checkphone']);
+    $phone = str_replace('-','',$phone);
+    $sql = "select * from montblanc_fbuser where REPLACE(phone,'-','') = '$phone' ";// (firstname is not null and lastname is not null) order by cdate desc ";
+    
+    
+}elseif($lenUcode>0){
+    $ucode = trim($_POST['ucode']);
+    $sql = "select * from montblanc_fbuser where ucode = '$ucode' ";
 }
 
-$sql = "select *  from montblanc_fbuser order by cdate desc LIMIT $startAt, $perPage";
-
-$Found = false;
+echo "\n\n\n<!-- SQL : $sql --->\n\n\n";
 
 $data=array();
-$i=0;
-try{
-	$stmt = $dbh->prepare($sql);
-	$stmt->execute();
-	$result = $stmt->fetchAll( PDO::FETCH_ASSOC );
-
-	foreach ($result as $row) {
-		
-        $data[$i]['ucode'] = $row['ucode'];
-        $data[$i]['fbid']  = $row['fbid'];
-        $data[$i]['fbname']  = $row['fbname'];
-        $data[$i]['firstname']  = $row['firstname'];
-        $data[$i]['lastname']  = $row['lastname'];
-        $data[$i]['avatar']  = '../'. $row['avatar'];
-        $data[$i]['email']  = $row['email'];
-        $data[$i]['phone']  = $row['phone'];
-        $data[$i]['cdate'] = $row['cdate'];
-        $i++;
-	}
-}catch (PDOException $ev) {
-	$dbh=null;
-	echo "DB error";
-}
-
-/// check who put all data
-$sql = "select count(*) as cc  from montblanc_fbuser where (firstname is not null and lastname is not null) order by cdate desc ";
+if(strlen($sql)>0){
+    try{
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll( PDO::FETCH_ASSOC );
     
-$getalldata = 0;
-
-try{
-    $stmt = $dbh->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetchAll( PDO::FETCH_ASSOC );
-
-    $getalldata = $result[0]['cc'];
-}catch (PDOException $ev) {
-    $dbh=null;
-    echo "DB error";
+        foreach ($result as $row) {
+            
+            $data[$i]['ucode'] = $row['ucode'];
+            $data[$i]['fbid']  = $row['fbid'];
+            $data[$i]['confirm']  = $row['confirm'];
+            $data[$i]['fbname']  = $row['fbname'];
+            $data[$i]['firstname']  = $row['firstname'];
+            $data[$i]['lastname']  = $row['lastname'];
+            $data[$i]['avatar']  = '../'. $row['avatar'];
+            $data[$i]['email']  = $row['email'];
+            $data[$i]['phone']  = $row['phone'];
+            $data[$i]['cdate'] = $row['cdate'];
+            $i++;
+        }
+    }catch (PDOException $ev) {
+        $dbh=null;
+        echo "DB error";
+    }
 }
 
-
-/// count CONFIRM
-$sql = "select count(*) as cc  from montblanc_fbuser where confirm=1 ";
-    
-$numConfirm = 0;
-
-try{
-    $stmt = $dbh->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetchAll( PDO::FETCH_ASSOC );
-
-    $numConfirm = $result[0]['cc'];
-}catch (PDOException $ev) {
-    $dbh=null;
-    echo "DB error";
-}
 
 
 $dbh = null;
 
-//$allUsers = sizeof($data);
-$allUsers = $total;
 ?>
 
 <!DOCTYPE html>
@@ -135,19 +112,29 @@ $allUsers = $total;
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="css/themes/all-themes.css" rel="stylesheet" />
 
+
+    
+
     <style>
         .fbavatar{
-            width: 48px;
-            height: 48px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            margin-top: 22px;
+            margin-top: 42px;
             margin-bottom: -24px;
             position: relative;
             top: 50%;
             transform: translateY(-50%);
-            
+
             /* for NOT-SQUARE Image */
             object-fit: cover;
+
+            border: 8px solid <?php echo $borderColor;?>;
+            /*
+            green border > 8px solid #0e8c5c
+            orange border > 8px solid #ff9d05
+            red border > 8px solid #fa0528
+            */
         }
         .grey{
             color: #cccccc;
@@ -237,14 +224,14 @@ $allUsers = $total;
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li class="active">
+                    <li class="">
                         <a href="index.php">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
 
-                    <li class="">
+                    <li class="active">
                         <a href="find.php">
                             <i class="material-icons">how_to_reg</i>
                             <span>Confirm การลงทะเบียน</span>
@@ -412,48 +399,10 @@ $allUsers = $total;
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>DASHBOARD</h2>
+                <h2>Confirm Registration</h2>
             </div>
 
-            <!-- Widgets -->
-            <div class="row clearfix">
-                
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-orange hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">person</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">ALL REGISTs</div>
-                            <div class="number count-to" data-from="0" data-to="<?=$allUsers;?>" data-speed="1000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-light-green hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">face</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">GET ALL DATA</div>
-                            <div class="number count-to" data-from="0" data-to="<?=$getalldata;?>" data-speed="1000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-cyan hover-expand-effect">  
-                        <div class="icon">
-                            <i class="material-icons">event_available</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">CONFIRM</div>
-                            <div class="number count-to" data-from="0" data-to="<?=$numConfirm;?>" data-speed="1000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- #END# Widgets -->
+
 
 
             <div class="row clearfix">
@@ -461,7 +410,7 @@ $allUsers = $total;
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="header">
-                            <h2>Registrant</h2>
+                            <h2>SEARCH</h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -477,27 +426,36 @@ $allUsers = $total;
                         </div>
                         <div class="body">
                             <div class="table-responsive">
-                                <div>
-                                    <?php echo $links;?>
-                                </div>
+                                <form method="POST" action="find.php?<?php echo bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));?>">
+                                    <table class="table">
+                                        <tr><td>เบอร์โทรศัพท์</td><td><input type="text" class="form-control" name="checkphone"></td></tr>
+                                        <tr><td colspan=2 align="center">หรือ</td></tr>
+                                        <tr><td>QR Code</td><td><input type="text" class="form-control" name="ucode"></td></tr>
+                                        <tr><td colspan=2 align="center"><input type=submit value=" ค้นหา "></td></tr>
+                                    </table>
+                                </form>
+                            <?php
+                            if(strlen($sql)>0){
+                                
+                            ?>
                                 <table class="table table-hover dashboard-task-infos">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Code</th>
                                             <th>Avatar</th>
                                             <th>FB Name</th>
                                             <th>Full Name</th>
                                             <th>Phone</th>
-                                            <th>Email</th>
-                                            <th>Date Registered</th>
+                                            <!--<th>Email</th>-->
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $num = $startAt + 1;
+                                            $num = 1;
+                                            $confirm = 0;
                                             foreach($data as $d){
-                                                $code = $d['ucode'];
+                                                $ucode = $d['ucode'];
+                                                $confirm = $d['confirm'];
                                                 $avatar = $d['avatar'];
                                                 $fbname = $d['fbname'];
                                                 $phone = $d['phone'];
@@ -505,7 +463,6 @@ $allUsers = $total;
                                                 $fullname = $d['firstname'] . ' ' . $d['lastname'];
 
                                                 $dt = date_create($d['cdate']);
-                                                $date = date_format($dt, DATE_RFC1123);
                                                 $date = date_format($dt, 'd M - H:i');
                                             
                                                 $grey = "";
@@ -513,25 +470,53 @@ $allUsers = $total;
                                                     $grey = "class='grey'";
                                                 }
 
+                                                echo "\n<form method='post' action='find.php'>";
                                                 echo "\n<tr $grey>";
-                                                echo "\n<td>$num</td>";
-                                                echo "\n<td><a href='../view/$code' target='_blank'>$code</a></td>";
+                                                //echo "\n<td>$num</td>";
+                                                echo "\n<td><a href='../view/$ucode' target='_blank'>$ucode</a>";
+                                                echo "\n\t<div><button type='submit' class='btn btn-success'>Confirm</button></div>";
+                                                echo "\n</td>";
                                                 echo "\n<td><img src='$avatar' class='fbavatar' /></td>";
                                                 echo "\n<td>$fbname</td>";
                                                 echo "\n<td>$fullname</td>";
                                                 echo "\n<td>$phone</td>";
-                                                echo "\n<td>$email</td>";
-                                                echo "\n<td>$date</td>";
+                                                //echo "\n<td>$email</td>";
+                                                //echo "\n<td>$date</td>";
                                                 echo "\n</tr>";
+                                                echo "\n<input type='hidden' name='cmd' value='confirm'>";
+                                                echo "\n<input type='hidden' name='ucode' value='$ucode'>";
+                                                echo "\n</form>";
+                                                echo "\n";
+
+                                                
+                                                $borderColor = "";
+                                                if($confirm==1){
+                                                    // DONE // Green
+                                                    $borderColor = "#0e8c5c";
+                                                }elseif($confirm==0){
+                                                    // Not yet // Yellow
+                                                    $borderColor = "#ffc414";
+                                                }
+
+                                                echo "\n<!-- Confirm : [$confirm] -->";
+                                                echo "\n<!-- Firstname : [$firstname] -->";
+                                                if(trim($fullname)==""){
+                                                    $borderColor = "#fa0528"; //red
+                                                }
+                                                
+                                                echo "\n\n<style>.fbavatar{border: 8px solid $borderColor;}</style>";
+                                                //print_r($data);
+                                                
+
                                                 $num++;
                                             }
                                         ?>
                                         
                                     </tbody>
                                 </table>
-                                <div>
-                                    <?php echo $links;?>
-                                </div>
+                            <?php
+                            }
+                            ?>
                             </div>
                         </div>
                     </div>

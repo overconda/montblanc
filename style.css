@@ -52,6 +52,7 @@ img.avatar-cir{
     border-radius: 50%;
     width: 140px;
     height: auto;
+    object-fit: cover;
 }
 
 .center{

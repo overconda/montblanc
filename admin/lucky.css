@@ -1,5 +1,5 @@
-html { 
-    background: url(../bg.jpg) no-repeat center center fixed; 
+body { 
+    background: url(bg-monitor2.png) no-repeat center top fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -36,4 +36,13 @@ html {
 
   #again{
       font-size: 2.4em;
+  }
+
+  img.logo{
+      width: 280px !important;
+      height: auto;
+  }
+
+  ul li img{
+      width: 480px;
   }
