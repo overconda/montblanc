@@ -36,13 +36,28 @@ include("../dbconnect.php");
             display: none;
         }
         .fh{
-            min-height: 800px;
+            /*min-height: 800px;*/
+            min-height: 768px !important;
+            min-width: 1024px !important;
+            max-width: 1024px !important;
         }
         .who{
             display: none;
             z-index: 999;
             min-width: 600px;
             min-height: 300px;
+        }
+        body{
+            overflow-x: hidden;
+            overflow-y: hidden;
+            background-color: #000000;
+        }
+        ::-webkit-scrollbar { 
+            display: none; 
+        }
+        ul{
+            left: 146px !important;
+            top: 20px !important;
         }
     </style>
   </head>
@@ -260,9 +275,20 @@ include("../dbconnect.php");
                     var x = document.getElementById("slideshow");   x.style.display = "block";
                     //var x = document.getElementById("again");   x.style.display = "block";
                 }
+                if(clickNum>2){
+                    count = 0;
+                    currentIndex=0;
+                    maximumCount = randomIntFromInterval(80,99);
+                    console.log('max : ' + maximumCount);
+                    nextSlide();
+                }
                 clickNum++;
                 
             }
+        }
+
+        function randomIntFromInterval(min,max){
+            return Math.floor(Math.random()*(max-min+1)+min);
         }
     </script>
   </body>
