@@ -278,7 +278,7 @@ include("../dbconnect.php");
                 if(clickNum>2){
                     count = 0;
                     currentIndex=0;
-                    maximumCount = randomIntFromInterval(80,99);
+                    maximumCount = randomIntFromInterval(70,99);
                     console.log('max : ' + maximumCount);
                     nextSlide();
                 }
